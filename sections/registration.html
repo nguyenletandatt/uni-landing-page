@@ -1,78 +1,131 @@
-<section id="registration" class="form-section" data-aos="fade-up">
+<!-- ============================================================
+     REGISTRATION SECTION – ĐĂNG KÝ TƯ VẤN TRIỂN KHAI
+     ============================================================ -->
+
+<section id="registration" class="form-section section-block" data-aos="fade-up">
   <div class="container">
     <div class="text-center mb-5">
       <span class="section-eyebrow">Đăng ký</span>
-      <h2 class="section-title">Đăng ký tham dự</h2>
-      <p class="section-lead mx-auto">Điền thông tin để giữ chỗ và nhận tài liệu hội thảo, lịch trình cập nhật và thông báo xác nhận từ ban tổ chức.</p>
+      <h2 class="section-title">Đăng ký tư vấn triển khai</h2>
+      <p class="section-lead mx-auto" style="max-width: 700px;">
+        Điền thông tin để nhận tư vấn giải pháp bảo mật phù hợp với đơn vị bạn.
+        Chúng tôi sẽ liên hệ trong vòng 24 giờ để trao đổi chi tiết.
+      </p>
     </div>
 
     <div class="row g-4 align-items-stretch">
+      <!-- Cột form -->
       <div class="col-lg-7">
         <div class="registration-panel h-100">
-          <form id="registrationForm">
+          <form id="consultationForm">
             <div class="row g-3">
+              <!-- Họ tên -->
               <div class="col-md-6">
                 <label class="form-label">Họ và tên *</label>
                 <input type="text" class="form-control" placeholder="Nguyễn Văn A" required />
               </div>
+              <!-- Email -->
               <div class="col-md-6">
                 <label class="form-label">Email *</label>
                 <input type="email" class="form-control" placeholder="example@company.com" required />
               </div>
+              <!-- SĐT -->
               <div class="col-md-6">
-                <label class="form-label">Số điện thoại</label>
-                <input type="tel" class="form-control" placeholder="0912 345 678" />
+                <label class="form-label">Số điện thoại *</label>
+                <input type="tel" class="form-control" placeholder="0912 345 678" required />
               </div>
+              <!-- Công ty -->
               <div class="col-md-6">
-                <label class="form-label">Công ty / Tổ chức</label>
-                <input type="text" class="form-control" placeholder="Tên công ty" />
+                <label class="form-label">Công ty / Tổ chức *</label>
+                <input type="text" class="form-control" placeholder="Tên công ty" required />
               </div>
-              <div class="col-12">
-                <label class="form-label">Hình thức tham dự</label>
+              <!-- Quy mô -->
+              <div class="col-md-6">
+                <label class="form-label">Quy mô nhân sự</label>
                 <select class="form-select">
-                  <option value="offline">Trực tiếp tại hội trường</option>
-                  <option value="online">Trực tuyến qua nền tảng sự kiện</option>
+                  <option value="">Chọn quy mô</option>
+                  <option value="1-10">1 – 10 nhân sự</option>
+                  <option value="11-50">11 – 50 nhân sự</option>
+                  <option value="51-200">51 – 200 nhân sự</option>
+                  <option value="201-1000">201 – 1000 nhân sự</option>
+                  <option value="1000+">Trên 1000 nhân sự</option>
                 </select>
               </div>
+              <!-- Lĩnh vực -->
+              <div class="col-md-6">
+                <label class="form-label">Lĩnh vực hoạt động</label>
+                <select class="form-select">
+                  <option value="">Chọn lĩnh vực</option>
+                  <option value="finance">Tài chính – Ngân hàng</option>
+                  <option value="tech">Công nghệ thông tin</option>
+                  <option value="manufacturing">Sản xuất</option>
+                  <option value="healthcare">Y tế</option>
+                  <option value="education">Giáo dục</option>
+                  <option value="retail">Thương mại – Dịch vụ</option>
+                  <option value="government">Chính phủ – Tổ chức công</option>
+                  <option value="other">Khác</option>
+                </select>
+              </div>
+              <!-- Nhu cầu cụ thể -->
+              <div class="col-12">
+                <label class="form-label">Nhu cầu / Yêu cầu cụ thể</label>
+                <textarea class="form-control" rows="3" placeholder="Vui lòng mô tả ngắn gọn nhu cầu bảo mật của đơn vị (ví dụ: cần triển khai SOC, đánh giá lỗ hổng, xây dựng chính sách an ninh...)" style="resize: vertical;"></textarea>
+              </div>
+              <!-- Đồng ý điều khoản -->
               <div class="col-12">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" required />
-                  <label class="form-check-label">Tôi đồng ý với <a href="#">chính sách bảo mật</a> và điều khoản sự kiện.</label>
+                  <label class="form-check-label">
+                    Tôi đồng ý với <a href="#">chính sách bảo mật</a> và cho phép liên hệ tư vấn.
+                  </label>
                 </div>
               </div>
+              <!-- Nút gửi -->
               <div class="col-12 text-center pt-2">
                 <button type="submit" class="btn btn-submit btn-lg px-5">
-                  <i class="bi bi-send me-2"></i>Gửi đăng ký
+                  <i class="bi bi-send me-2"></i>Gửi yêu cầu tư vấn
                 </button>
               </div>
             </div>
           </form>
         </div>
       </div>
+
+      <!-- Cột bên phải: Lợi ích tư vấn -->
       <div class="col-lg-5">
         <div class="registration-side">
-          <span class="section-badge"><i class="bi bi-stars"></i> Quyền lợi</span>
-          <h3 class="h4 fw-bold mt-3">Vì sao nên đăng ký sớm?</h3>
+          <span class="section-badge"><i class="bi bi-stars"></i> Lợi ích tư vấn</span>
+          <h3 class="h4 fw-bold mt-3">Nhận gì sau khi đăng ký?</h3>
           <div class="mt-4 d-grid gap-3">
             <div class="d-flex gap-3">
               <i class="bi bi-check2-circle text-warning fs-4"></i>
               <div>
-                <div class="fw-bold">Giữ suất ưu tiên</div>
-                <div class="text-white-50">Bảo đảm chỗ tham dự và nhận cập nhật chương trình sớm nhất.</div>
+                <div class="fw-bold">Tư vấn lộ trình riêng</div>
+                <div class="text-white-50">Đánh giá sơ bộ và đề xuất hướng tiếp cận phù hợp với nguồn lực của bạn.</div>
               </div>
             </div>
             <div class="d-flex gap-3">
               <i class="bi bi-file-earmark-text text-warning fs-4"></i>
               <div>
-                <div class="fw-bold">Tài liệu chuyên sâu</div>
-                <div class="text-white-50">Nhận bản tổng hợp nội dung, slide và checklist thực hành sau sự kiện.</div>
+                <div class="fw-bold">Nhận báo giá &amp; phương án</div>
+                <div class="text-white-50">Nhận báo giá chi tiết và phương án triển khai tối ưu cho từng giai đoạn.</div>
               </div>
             </div>
             <div class="d-flex gap-3">
               <i class="bi bi-people text-warning fs-4"></i>
               <div>
                 <div class="fw-bold">Kết nối chuyên gia</div>
-                <div class="text-white-50">Giao lưu cùng diễn giả và cộng đồng an toàn thông tin trong nước.</div>
+                <div class="text-white-50">Được hỗ trợ trực tiếp từ các kỹ sư bảo mật có kinh nghiệm triển khai thực tế.</div>
+              </div>
+            </div>
+          </div>
+          <!-- Cam kết -->
+          <div class="mt-4 p-3 rounded-4" style="background: rgba(249,184,58,0.05); border: 1px solid rgba(249,184,58,0.15);">
+            <div class="d-flex gap-3 align-items-center">
+              <i class="bi bi-clock-history text-warning fs-3"></i>
+              <div>
+                <div class="fw-bold">Phản hồi nhanh chóng</div>
+                <div class="text-white-50 small">Chúng tôi sẽ liên hệ lại trong vòng 24 giờ làm việc để lên lịch tư vấn.</div>
               </div>
             </div>
           </div>

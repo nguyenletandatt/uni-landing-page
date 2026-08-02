@@ -1,176 +1,375 @@
 /* ============================================================
-   SECTION: SOLUTIONS - PHONG CÁCH HIỆN ĐẠI, BẮT MẮT
+   SECTION: SOLUTIONS – SHIELD & CONNECTIONS (Refined)
    ============================================================ */
 
 .solutions-section {
-    padding: 80px 0;
-    /* background:
-        radial-gradient(ellipse at 60% 20%, rgba(139, 220, 255, 0.03) 0%, transparent 60%),
-        radial-gradient(ellipse at 40% 80%, rgba(249, 184, 58, 0.02) 0%, transparent 60%); */
-}
-
-/* --- GRID LAYOUT --- */
-.solutions-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.8rem;
-    margin-top: 1rem;
-}
-
-/* --- SOLUTION CARD --- */
-.solution-card {
     position: relative;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 24px;
-    padding: 1.8rem 1.5rem 1.5rem;
+    padding: 72px 0 88px;
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: default;
+    align-items: center;
     overflow: hidden;
-    min-height: 280px;
+    background: #080c16;
+}
+
+.solutions-heading {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.5rem;
+}
+
+/* Board chính – lưới 3x3 chặt chẽ */
+.solutions-graphic-board {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr; /* Cột giữa rộng hơn một chút để chứa khiên */
+    grid-template-rows: minmax(140px, 1fr) minmax(180px, 1.2fr) minmax(140px, 1fr);
+    gap: 1.1rem;
+    padding: 1.5rem;
+    border-radius: 32px;
+    background: rgba(10, 18, 32, 0.88);
     backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
 }
 
-.solution-card:hover {
-    transform: translateY(-8px) scale(1.01);
-    border-color: rgba(249, 184, 58, 0.25);
-    box-shadow:
-        0 20px 50px -12px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(249, 184, 58, 0.05);
-}
-
-/* Glow nền */
-.solution-card-glow {
+/* Lớp SVG kết nối - nằm dưới các thẻ */
+.connections-svg {
     position: absolute;
-    top: -30%;
-    right: -30%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ===== TRUNG TÂM: KHIÊN BẢO VỆ ===== */
+.solutions-core-panel {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.solutions-shield {
+    width: 100%;
+    max-width: 160px;
+    aspect-ratio: 1 / 1.1; /* Hình khiên hơi cao */
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: linear-gradient(145deg, rgba(16, 35, 65, 0.95), rgba(5, 15, 30, 0.98));
+    border: 2px solid rgba(139, 220, 255, 0.6);
+    box-shadow:
+        0 0 40px rgba(139, 220, 255, 0.12),
+        inset 0 0 60px rgba(139, 220, 255, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
+}
+
+.solutions-shield:hover {
+    border-color: rgba(255, 211, 110, 0.7);
+    box-shadow:
+        0 0 60px rgba(139, 220, 255, 0.25),
+        inset 0 0 80px rgba(255, 211, 110, 0.06);
+}
+
+.solutions-logo-shell {
+    width: 72%;
+    height: 72%;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), transparent 70%);
+}
+
+.solutions-logo-img {
     width: 80%;
     height: 80%;
-    background: radial-gradient(circle, rgba(249, 184, 58, 0.06), transparent 70%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    border-radius: 50%;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
 }
 
-.solution-card:hover .solution-card-glow {
-    opacity: 1;
+.solutions-logo-fallback {
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: #f1f5f9;
+    text-align: center;
 }
 
-/* Đường viền sáng trên cùng */
-.solution-card::before {
+/* ===== 8 THẺ GIẢI PHÁP ===== */
+.solution-callout {
+    --accent: #ffd36e;
+    --accent-soft: rgba(255, 211, 110, 0.06);
+    position: relative;
+    z-index: 3;
+    padding: 1rem 1rem 0.9rem;
+    border-radius: 20px;
+    background: linear-gradient(160deg, rgba(16, 28, 48, 0.92), rgba(8, 16, 28, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+    overflow: hidden;
+    height: 100%; /* Đảm bảo các thẻ kéo giãn hết ô lưới */
+}
+
+.solution-callout:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.solution-callout::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(249, 184, 58, 0.3), transparent);
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    inset: 0;
+    background: radial-gradient(circle at top right, var(--accent-soft), transparent 60%);
+    pointer-events: none;
 }
 
-.solution-card:hover::before {
-    opacity: 1;
+.solution-callout-index {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: grid;
+    place-items: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: rgba(148, 163, 184, 0.7);
 }
 
-/* --- CARD HEADER --- */
-.solution-card-header {
+.solution-callout-top {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1.2rem;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-right: 2.2rem;
 }
 
 .solution-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.8rem;
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
     border-radius: 99px;
-    background: rgba(249, 184, 58, 0.1);
-    color: #fbbf24;
-    font-size: 0.7rem;
+    background: var(--accent-soft);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--accent);
+    font-size: 0.6rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border: 1px solid rgba(249, 184, 58, 0.1);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
 }
 
 .solution-icon-wrapper {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(255, 255, 255, 0.04);
     display: grid;
     place-items: center;
-    background: linear-gradient(135deg, rgba(249, 184, 58, 0.12), rgba(139, 220, 255, 0.08));
-    color: #f9b83a;
-    font-size: 1.4rem;
-    transition: all 0.3s ease;
+    color: var(--accent);
+    font-size: 1rem;
+    transition: transform 0.2s ease;
 }
 
-.solution-card:hover .solution-icon-wrapper {
-    background: linear-gradient(135deg, rgba(249, 184, 58, 0.2), rgba(139, 220, 255, 0.15));
+.solution-callout:hover .solution-icon-wrapper {
     transform: scale(1.05) rotate(-3deg);
 }
 
-/* --- CARD CONTENT --- */
 .solution-title {
-    font-size: 1.1rem;
+    font-size: 0.92rem;
     font-weight: 700;
     color: #f1f5f9;
-    margin-bottom: 0.6rem;
     line-height: 1.3;
+    margin: 0;
+    letter-spacing: -0.01em;
 }
 
 .solution-desc {
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     color: #94a3b8;
-    line-height: 1.6;
+    line-height: 1.4;
+    margin: 0;
     flex: 1;
-    margin-bottom: 1.2rem;
 }
 
 .solution-footer {
-    margin-top: auto;
-    padding-top: 1rem;
+    margin-top: 0.2rem;
+    padding-top: 0.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .solution-link {
     background: none;
     border: none;
-    color: #f9b83a;
-    font-weight: 600;
-    font-size: 0.9rem;
-    padding: 0;
-    cursor: pointer;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.78rem;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    transition: all 0.3s ease;
+    gap: 0.3rem;
+    cursor: pointer;
+    padding: 0;
     font-family: inherit;
+    transition:
+        gap 0.2s ease,
+        color 0.2s ease;
 }
 
 .solution-link:hover {
     color: #fff;
-    gap: 0.8rem;
+    gap: 0.6rem;
 }
 
-.solution-link i {
-    transition: transform 0.3s ease;
+/* Màu sắc riêng cho từng thẻ */
+.solution-callout[data-solution="ngfw"] {
+    --accent: #ffd36e;
+}
+.solution-callout[data-solution="soc"] {
+    --accent: #8bdcff;
+}
+.solution-callout[data-solution="edr"] {
+    --accent: #81e6c7;
+}
+.solution-callout[data-solution="waf"] {
+    --accent: #a7b7ff;
+}
+.solution-callout[data-solution="backup"] {
+    --accent: #f8b86a;
+}
+.solution-callout[data-solution="email"] {
+    --accent: #ff9f93;
+}
+.solution-callout[data-solution="pentest"] {
+    --accent: #f6d66f;
+}
+.solution-callout[data-solution="iam"] {
+    --accent: #8fe1ff;
 }
 
-.solution-link:hover i {
-    transform: translateX(4px);
+/* Vị trí cụ thể trên lưới 3x3 */
+.solution-callout[data-solution="iam"] {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+.solution-callout[data-solution="ngfw"] {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+.solution-callout[data-solution="soc"] {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+}
+.solution-callout[data-solution="pentest"] {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+.solution-callout[data-solution="edr"] {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+}
+.solution-callout[data-solution="email"] {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+}
+.solution-callout[data-solution="backup"] {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+}
+.solution-callout[data-solution="waf"] {
+    grid-column: 3 / 4;
+    grid-row: 3 / 4;
 }
 
-/* ============================================================
-   MODAL
-   ============================================================ */
+/* Typing effect - ban đầu ẩn chữ */
+.solution-callout:not(.is-revealed) .solution-title,
+.solution-callout:not(.is-revealed) .solution-desc {
+    opacity: 0;
+}
+.solution-callout.is-revealed .solution-title,
+.solution-callout.is-revealed .solution-desc {
+    opacity: 1;
+    transition: opacity 0.15s ease;
+}
 
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1199.98px) {
+    .solutions-graphic-board {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 1rem;
+    }
+
+    /* Trung tâm: chiếm trọn cột 1, nằm ở hàng đầu */
+    .solutions-core-panel {
+        grid-column: 1 / -1;
+        grid-row: 1 / 2;
+        padding: 1.5rem 0;
+    }
+    .solutions-shield {
+        max-width: 120px;
+    }
+
+    /* Các thẻ tự động trôi theo thứ tự DOM, nhưng ta vẫn giữ vị trí grid cho 8 thẻ còn lại */
+    .solution-callout {
+        grid-column: auto !important;
+        grid-row: auto !important;
+        height: auto;
+    }
+    .connections-svg {
+        display: none; /* Ẩn đường kẻ trên tablet/mobile */
+    }
+}
+
+@media (max-width: 767.98px) {
+    .solutions-section {
+        padding: 48px 0 64px;
+        min-height: auto;
+    }
+    .solutions-graphic-board {
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+        padding: 1rem;
+        border-radius: 24px;
+    }
+    .solutions-core-panel {
+        padding: 1rem 0;
+    }
+    .solutions-shield {
+        max-width: 100px;
+    }
+    .solution-callout {
+        padding: 0.9rem;
+    }
+    .solution-title {
+        font-size: 0.9rem;
+    }
+    .solution-desc {
+        font-size: 0.78rem;
+    }
+}
+
+/* ===== MODAL (giữ nguyên) ===== */
 .solution-modal-overlay {
     position: fixed;
     inset: 0;
@@ -180,46 +379,38 @@
     justify-content: center;
     padding: 1.5rem;
     background: rgba(6, 10, 16, 0.75);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    backdrop-filter: blur(10px);
     opacity: 0;
     visibility: hidden;
     transition:
         opacity 0.3s ease,
         visibility 0.3s ease;
 }
-
 .solution-modal-overlay.active {
     opacity: 1;
     visibility: visible;
 }
-
 .solution-modal {
     position: relative;
     width: 100%;
-    max-width: 680px;
+    max-width: 640px;
     max-height: 85vh;
     overflow-y: auto;
-    background: linear-gradient(145deg, #0f1a2a, #0b1622);
+    background: #0f1a2a;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 28px;
-    padding: 2.2rem 2.2rem 2rem;
-    box-shadow:
-        0 40px 80px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(249, 184, 58, 0.05);
-    transform: translateY(30px) scale(0.96);
+    padding: 2rem 2rem 1.8rem;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+    transform: translateY(20px) scale(0.96);
     opacity: 0;
     transition:
         transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
         opacity 0.35s ease;
 }
-
 .solution-modal-overlay.active .solution-modal {
     transform: translateY(0) scale(1);
     opacity: 1;
 }
-
-/* Scrollbar styling */
 .solution-modal::-webkit-scrollbar {
     width: 4px;
 }
@@ -230,118 +421,103 @@
     background: rgba(249, 184, 58, 0.3);
     border-radius: 10px;
 }
-
-/* Nút đóng */
 .solution-modal-close {
     position: sticky;
     top: 0;
     float: right;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     border: none;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.04);
     color: #c0d0e0;
     display: grid;
     place-items: center;
     cursor: pointer;
     transition: all 0.25s ease;
-    font-size: 1.1rem;
-    backdrop-filter: blur(4px);
+    font-size: 1rem;
     margin-bottom: 0.5rem;
     flex-shrink: 0;
 }
-
 .solution-modal-close:hover {
-    background: rgba(249, 184, 58, 0.15);
+    background: rgba(249, 184, 58, 0.12);
     color: #f9b83a;
     transform: rotate(90deg);
 }
-
-/* Nội dung modal */
 .solution-modal-body {
     clear: both;
     padding-top: 0.5rem;
 }
-
 .solution-modal-body .modal-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 18px;
-    background: linear-gradient(135deg, rgba(249, 184, 58, 0.12), rgba(139, 220, 255, 0.08));
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: rgba(249, 184, 58, 0.08);
     color: #f9b83a;
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-}
-
-.solution-modal-body .modal-title {
     font-size: 1.6rem;
+    margin-bottom: 0.8rem;
+}
+.solution-modal-body .modal-title {
+    font-size: 1.5rem;
     font-weight: 700;
     color: #f1f5f9;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
-
 .solution-modal-body .modal-subtitle {
     color: #94a3b8;
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1.6;
-    margin-bottom: 1.8rem;
-}
-
-.solution-modal-body .modal-section {
     margin-bottom: 1.5rem;
 }
-
+.solution-modal-body .modal-section {
+    margin-bottom: 1.2rem;
+}
 .solution-modal-body .modal-section h4 {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
+    gap: 0.4rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #f9b83a;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 0.6rem;
+    letter-spacing: 0.4px;
+    margin-bottom: 0.4rem;
 }
-
 .solution-modal-body .modal-section ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
-
 .solution-modal-body .modal-section li {
-    padding-left: 1.6rem;
+    padding-left: 1.4rem;
     position: relative;
     color: #c8d8e8;
     line-height: 1.5;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
 }
-
 .solution-modal-body .modal-section li::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 0.55rem;
-    width: 8px;
-    height: 8px;
+    top: 0.5rem;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: #f9b83a;
-    opacity: 0.6;
+    opacity: 0.5;
 }
-
 .modal-cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    margin-top: 1rem;
-    padding: 0.7rem 1.8rem;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.6rem 1.6rem;
     border-radius: 99px;
     background: linear-gradient(135deg, #f9b83a, #f59e0b);
     color: #0b1a2e;
@@ -349,46 +525,12 @@
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-family: inherit;
     text-decoration: none;
 }
-
 .modal-cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(249, 184, 58, 0.3);
+    box-shadow: 0 8px 24px rgba(249, 184, 58, 0.25);
     color: #0b1a2e;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    .solutions-section {
-        padding: 50px 0;
-    }
-    .solutions-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-    }
-    .solution-card {
-        padding: 1.2rem 1rem;
-        min-height: 220px;
-    }
-    .solution-title {
-        font-size: 0.95rem;
-    }
-    .solution-desc {
-        font-size: 0.8rem;
-    }
-    .solution-modal {
-        padding: 1.5rem;
-    }
-    .solution-modal-body .modal-title {
-        font-size: 1.3rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .solutions-grid {
-        grid-template-columns: 1fr;
-    }
 }
