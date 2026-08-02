@@ -1,0 +1,170 @@
+/* ============================================================
+   SECTION: PARTNERS - LOGO SLIDER
+   ============================================================ */
+
+.partners-section {
+    padding: 80px 0;
+    background:
+        radial-gradient(ellipse at 70% 20%, rgba(249, 184, 58, 0.03) 0%, transparent 60%),
+        radial-gradient(ellipse at 30% 80%, rgba(139, 220, 255, 0.02) 0%, transparent 60%), #0b1a2e;
+    overflow: hidden;
+}
+
+/* SLIDER WRAPPER */
+.partner-slider-wrapper {
+    position: relative;
+    width: 100%;
+    padding: 2rem 0;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.partner-rail {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+}
+
+.partner-track {
+    display: flex;
+    gap: 2.5rem;
+    animation: scrollMarquee 30s linear infinite;
+    width: max-content;
+}
+
+/* Dừng animation khi hover để người dùng xem kỹ */
+.partner-slider-wrapper:hover .partner-track {
+    animation-play-state: paused;
+}
+
+/* Logo card */
+.partner-logo-card {
+    flex: 0 0 auto;
+    width: 200px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.partner-logo-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(249, 184, 58, 0.3);
+    transform: scale(1.08);
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(249, 184, 58, 0.05);
+}
+
+.partner-logo-card img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0.9) saturate(0.8) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition:
+        filter 0.4s ease,
+        transform 0.4s ease;
+}
+
+.partner-logo-card:hover img {
+    filter: brightness(1.1) saturate(1) drop-shadow(0 4px 12px rgba(249, 184, 58, 0.2));
+    transform: scale(1.02);
+}
+
+/* Animation chạy vô tận */
+@keyframes scrollMarquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* STATS PANEL - nâng cấp */
+.stats-panel {
+    margin-top: 3.5rem;
+}
+
+.stat-box {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    padding: 2rem 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.stat-box:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(249, 184, 58, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.stat-number {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(2.4rem, 4vw, 3.2rem);
+    font-weight: 700;
+    color: #f9b83a;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.stat-label {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .partners-section {
+        padding: 50px 0;
+    }
+
+    .partner-logo-card {
+        width: 120px;
+        height: 70px;
+        padding: 0.5rem;
+    }
+
+    .partner-track {
+        gap: 1.5rem;
+    }
+
+    .stat-box {
+        padding: 1.2rem 0.3rem;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+    }
+
+    .partner-slider-wrapper {
+        padding: 1rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .partner-logo-card {
+        width: 100px;
+        height: 60px;
+    }
+
+    .partner-track {
+        gap: 1rem;
+    }
+}

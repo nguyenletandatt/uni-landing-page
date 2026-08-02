@@ -1,0 +1,47 @@
+.form-section {
+  padding: 0 0 86px;
+}
+
+.registration-panel {
+  padding: 1.5rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.05));
+}
+
+.registration-side {
+  height: 100%;
+  padding: 1.5rem;
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(8, 16, 30, 0.96), rgba(12, 24, 44, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.form-label {
+  color: rgba(234, 242, 255, 0.88);
+  font-weight: 700;
+}
+
+.form-control,
+.form-select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 16px;
+  padding: 0.92rem 1rem;
+}
+
+.form-control::placeholder {
+  color: rgba(234, 242, 255, 0.42);
+}
+
+.form-control:focus,
+.form-select:focus {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(139, 220, 255, 0.45);
+  box-shadow: 0 0 0 0.2rem rgba(139, 220, 255, 0.12);
+}
+
+.form-control option,
+.form-select option {
+  color: #08101d;
+}

@@ -1,0 +1,29 @@
+.stats-section {
+  padding: 0 0 86px;
+}
+
+.stats-panel {
+  padding: 1.2rem;
+  background: linear-gradient(135deg, rgba(139, 220, 255, 0.12), rgba(255, 211, 110, 0.1)), rgba(9, 18, 34, 0.92);
+}
+
+.stat-box {
+  padding: 1.5rem 1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-number {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.5rem, 4vw, 4.2rem);
+  line-height: 1;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-label {
+  margin-top: 0.7rem;
+  margin-bottom: 0;
+  color: rgba(234, 242, 255, 0.72);
+}

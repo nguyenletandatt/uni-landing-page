@@ -1,0 +1,257 @@
+/* ============================================================
+   DEPLOYMENT SECTION - QUY TRÌNH BẢO MẬT
+   ============================================================ */
+
+.deployment-section {
+  padding: 80px 0;
+  /* background: radial-gradient(ellipse at 30% 20%, rgba(139, 220, 255, 0.04) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 60%),
+              #0b1a2e; */
+}
+
+.deployment-section .section-eyebrow {
+  background: rgba(139, 220, 255, 0.08);
+  border-color: rgba(139, 220, 255, 0.15);
+  color: #8bdcff;
+}
+
+/* --- TIMELINE WRAPPER --- */
+.deployment-timeline-wrapper {
+  position: relative;
+  padding: 1rem 0;
+}
+
+/* Đường kẻ dọc xuyên suốt */
+.timeline-connector {
+  position: absolute;
+  left: 56px;
+  top: 40px;
+  bottom: 40px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(139, 220, 255, 0.3), rgba(16, 185, 129, 0.3));
+  z-index: 0;
+}
+
+/* --- DEPLOYMENT STEP --- */
+.deployment-step {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.deployment-step:last-child {
+  margin-bottom: 0;
+}
+
+/* Marker bên trái */
+.step-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 56px;
+}
+
+.step-number {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #8bdcff, #f9b83a);
+  color: #0b1a2e;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 30px rgba(139, 220, 255, 0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.deployment-step:hover .step-number {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(139, 220, 255, 0.25);
+}
+
+/* Nội dung bên phải */
+.step-content {
+  flex: 1;
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.2rem 1.8rem 1.2rem 1.2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  align-items: flex-start;
+}
+
+.deployment-step:hover .step-content {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(139, 220, 255, 0.15);
+  transform: translateX(8px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+.step-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(139, 220, 255, 0.08);
+  color: #8bdcff;
+  font-size: 1.4rem;
+  transition: all 0.4s ease;
+}
+
+.deployment-step:hover .step-icon {
+  background: rgba(139, 220, 255, 0.18);
+  transform: rotate(-6deg) scale(1.05);
+}
+
+.step-content h3 {
+  color: #f1f5f9;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.step-desc {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.step-detail-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.2rem;
+}
+
+.step-detail-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.step-detail-list li i {
+  color: #6ee7b7;
+  font-size: 0.7rem;
+}
+
+/* --- CTA BOX --- */
+.deployment-cta {
+  margin-top: 3rem;
+}
+
+.cta-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 2rem 2.5rem;
+  background: linear-gradient(135deg, rgba(139, 220, 255, 0.06), rgba(16, 185, 129, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 30px;
+  backdrop-filter: blur(8px);
+}
+
+.cta-content {
+  flex: 1;
+}
+
+.cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 1rem;
+  border-radius: 30px;
+  background: rgba(249, 184, 58, 0.12);
+  color: #f9b83a;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.cta-desc {
+  color: #94a3b8;
+  margin-bottom: 0;
+  font-size: 1rem;
+}
+
+.cta-box .btn-cta {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .deployment-step {
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .step-marker {
+    flex-direction: row;
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  .step-number {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
+  }
+
+  .step-line {
+    display: none;
+  }
+
+  .step-content {
+    flex-direction: column;
+    padding: 1rem 1.2rem;
+    gap: 0.8rem;
+  }
+
+  .step-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .timeline-connector {
+    left: 22px;
+  }
+
+  .cta-box {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .cta-box .btn-cta {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .step-detail-list {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+}

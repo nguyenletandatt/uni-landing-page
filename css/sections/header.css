@@ -1,0 +1,68 @@
+.navbar {
+  backdrop-filter: blur(18px);
+  background: rgba(6, 16, 29, 0.72) !important;
+  border-bottom: 1px solid var(--line);
+}
+
+.navbar-brand {
+  gap: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.35));
+}
+
+.brand-title {
+  font-family: 'Space Grotesk', sans-serif;
+  line-height: 1.05;
+}
+
+.brand-slogan {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+}
+
+.navbar .nav-link {
+  color: rgba(234, 242, 255, 0.78);
+  font-weight: 600;
+  position: relative;
+}
+
+.navbar .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.35rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 211, 110, 0.8), transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-link.active {
+  color: #fff;
+}
+
+.navbar .nav-link:hover::after,
+.navbar .nav-link.active::after {
+  transform: scaleX(1);
+}
+
+.navbar .btn-warning {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  border: none;
+  color: #1b1b1f;
+  box-shadow: 0 14px 28px rgba(255, 183, 77, 0.28);
+}
+
+.navbar .btn-warning:hover {
+  transform: translateY(-1px);
+}

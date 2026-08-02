@@ -1,0 +1,446 @@
+/* ============================================================
+   THREATS SECTION - HIỆN ĐẠI, SỐNG ĐỘNG
+   ============================================================ */
+
+.threats-section {
+  padding: 80px 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(16, 185, 129, 0.03) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(139, 220, 255, 0.03) 0%, transparent 60%),
+              #0b1a2e;
+}
+
+/* --- SECTION HEADER --- */
+.section-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 3.5rem auto;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 20px;
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: rgba(16, 185, 129, 0.08);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  margin-bottom: 1.2rem;
+  backdrop-filter: blur(4px);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.4); }
+}
+
+.section-title {
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-lead {
+  color: #94a3b8;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* --- CYBER CARDS GRID --- */
+.threats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.8rem;
+}
+
+.threat-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  padding: 1.8rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  min-height: 340px;
+}
+
+/* Lớp glow ẩn bên dưới */
+.card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.threat-card:hover .card-glow {
+  opacity: 0.15;
+}
+
+/* Đường viền sáng trên cùng */
+.threat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  height: 2px;
+  transition: width 0.5s ease, box-shadow 0.5s ease;
+}
+
+.threat-card:hover::before {
+  width: 70%;
+}
+
+/* ===== MÀU SẮC THEME ===== */
+/* Amber - Ransomware */
+.card-amber {
+  --theme: #f59e0b;
+  --theme-dim: rgba(245, 158, 11, 0.06);
+  --theme-glow: rgba(245, 158, 11, 0.2);
+}
+.card-amber:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -12px rgba(245, 158, 11, 0.15);
+}
+.card-amber::before { background: #f59e0b; }
+.card-amber .threat-stat, .card-amber .hud-id { color: #fbbf24; }
+.card-amber .progress-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.card-amber .hud-tag { border-color: rgba(245, 158, 11, 0.25); background: rgba(245, 158, 11, 0.08); color: #fcd34d; }
+.card-amber .card-glow { background: radial-gradient(circle, rgba(245, 158, 11, 0.3), transparent 70%); }
+
+/* Orange - Email Phishing */
+.card-orange {
+  --theme: #f97316;
+  --theme-dim: rgba(249, 115, 22, 0.06);
+  --theme-glow: rgba(249, 115, 22, 0.2);
+}
+.card-orange:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -12px rgba(249, 115, 22, 0.15);
+}
+.card-orange::before { background: #f97316; }
+.card-orange .threat-stat, .card-orange .hud-id { color: #fb923c; }
+.card-orange .progress-fill { background: linear-gradient(90deg, #f97316, #fb923c); }
+.card-orange .hud-tag { border-color: rgba(249, 115, 22, 0.25); background: rgba(249, 115, 22, 0.08); color: #fdba74; }
+.card-orange .card-glow { background: radial-gradient(circle, rgba(249, 115, 22, 0.3), transparent 70%); }
+
+/* Purple - Detection Time */
+.card-purple {
+  --theme: #a855f7;
+  --theme-dim: rgba(168, 85, 247, 0.06);
+  --theme-glow: rgba(168, 85, 247, 0.2);
+}
+.card-purple:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -12px rgba(168, 85, 247, 0.15);
+}
+.card-purple::before { background: #a855f7; }
+.card-purple .threat-stat, .card-purple .hud-id { color: #c084fc; }
+.card-purple .hud-tag { border-color: rgba(168, 85, 247, 0.25); background: rgba(168, 85, 247, 0.08); color: #d8b4fe; }
+.card-purple .card-glow { background: radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent 70%); }
+
+/* Emerald - Web Công vụ */
+.card-emerald {
+  --theme: #10b981;
+  --theme-dim: rgba(16, 185, 129, 0.06);
+  --theme-glow: rgba(16, 185, 129, 0.2);
+}
+.card-emerald:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -12px rgba(16, 185, 129, 0.15);
+}
+.card-emerald::before { background: #10b981; }
+.card-emerald .threat-stat, .card-emerald .hud-id { color: #34d399; }
+.card-emerald .hud-tag { border-color: rgba(16, 185, 129, 0.25); background: rgba(16, 185, 129, 0.08); color: #6ee7b7; }
+.card-emerald .card-glow { background: radial-gradient(circle, rgba(16, 185, 129, 0.3), transparent 70%); }
+
+/* --- CARD CONTENT COMPONENTS --- */
+.card-header-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.hud-id {
+  font-family: 'Space Grotesk', 'Segoe UI', monospace;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.hud-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 0.65rem;
+}
+
+.live-dot, .monitor-dot, .risk-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.live-dot {
+  background: #10b981;
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+.monitor-dot {
+  background: #f59e0b;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+.risk-dot {
+  background: #ef4444;
+  animation: pulse-dot 1s ease-in-out infinite;
+}
+
+.threat-stat {
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  font-size: clamp(2.6rem, 4.5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+  letter-spacing: -1px;
+}
+
+.threat-stat .unit {
+  font-size: 0.45em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+  margin-left: 2px;
+}
+
+/* Progress bar */
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  margin: 1rem 0 1.2rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 0%;
+}
+
+/* Timeline badge */
+.timeline-badge {
+  display: inline-block;
+  margin: 0.8rem 0 0.6rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.2rem 0.8rem;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.threat-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 0.6rem;
+}
+
+.threat-desc {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+  flex: 1;
+}
+
+/* Card footer */
+.card-footer-hud {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hud-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  letter-spacing: 0.3px;
+}
+
+.hud-timestamp {
+  font-size: 0.7rem;
+  color: #475569;
+  font-family: 'Space Grotesk', monospace;
+  letter-spacing: 0.5px;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .threats-section {
+    padding: 50px 0;
+  }
+  .threats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .threat-card {
+    padding: 1.5rem 1.2rem;
+    min-height: 280px;
+  }
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+  .section-title {
+    font-size: 1.8rem;
+  }
+  .threat-stat {
+    font-size: 2.4rem;
+  }
+}
+
+/* ============================================================
+   SECTION: THREATS (BỔ SUNG ANIMATION & HIỆU ỨNG)
+   ============================================================ */
+
+.threats-section {
+  padding: 4rem 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(16, 185, 129, 0.03) 0%, transparent 60%);
+}
+
+/* Card glow effect */
+.threat-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.03) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.threat-card:hover .card-glow {
+  opacity: 1;
+}
+
+/* Progress bar animation */
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  margin: 1.25rem 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  width: 0% !important; /* Override inline style ban đầu, sẽ được set bằng JS */
+}
+
+/* Khi card xuất hiện, progress-fill sẽ chạy */
+.threat-card.visible .progress-fill {
+  width: var(--progress-width) !important;
+}
+
+/* Dot status */
+.live-dot, .monitor-dot, .risk-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: pulse-dot 1.5s infinite;
+}
+.live-dot { background: #f97316; }
+.monitor-dot { background: #8b5cf6; }
+.risk-dot { background: #ef4444; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.7); }
+}
+
+/* Số đếm animation */
+.number-value {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Điều chỉnh layout cho card 4 (không có unit) */
+.card-emerald .threat-stat {
+  font-size: clamp(3rem, 5vw, 4rem);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .threats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .threat-card {
+    padding: 1.2rem;
+  }
+}

@@ -1,0 +1,148 @@
+<section class="hero-section" data-aos="fade-up">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <!-- Cột trái: Nội dung chính -->
+<!-- Cột trái: Nội dung chính - NÂNG CẤP NGẮN GỌN -->
+<div class="col-lg-7 text-center text-lg-start" data-aos="fade-right">
+  <!-- Badge nổi bật -->
+  <div class="hero-badges d-flex flex-wrap gap-2 mb-3">
+    <span class="eyebrow">
+      <i class="bi bi-shield-check"></i>CÔNG TY CỔ PHẦN UNI - GIẢI PHÁP BẢO MẬT TOÀN DIỆN</strong>
+    </span>
+  </div>
+
+  <!-- Tiêu đề chính - NGẮN GỌN -->
+  <h2 style="text-transform: uppercase;" class="display-4 fw-bold">
+    <span class="text-gradient">Hệ thống bảo mật <br />
+    <span class="highlight">chủ động</span> cho <br /> 
+    <span class="text-gradient">bạn cùng <span class="highlight">UNI</span>
+
+  </h2>
+
+  <!-- Mô tả ngắn gọn -->
+  <p class="lead mx-auto mx-lg-0">
+    <strong>12 năm kinh nghiệm</strong> – Đối tác của <strong>Palo Alto, Fortinet, Cisco</strong>. 
+    Giải pháp bảo mật đa lớp, giám sát 24/7, phản ứng sự cố <strong>&lt;15 phút</strong>.
+  </p>
+
+  <!-- Danh sách điểm mạnh (rút gọn) -->
+  <ul class="list-unstyled d-inline-block text-start mt-3">
+    <li class="mb-2">
+      <i class="bi bi-check-circle-fill text-warning me-2"></i>
+      <strong>Triển khai nhanh:</strong> Chỉ 14 ngày từ khảo sát đến bàn giao
+    </li>
+    <li class="mb-2">
+      <i class="bi bi-check-circle-fill text-warning me-2"></i>
+      <strong>Đào tạo chuyên sâu:</strong> Đội ngũ chứng chỉ quốc tế
+    </li>
+    <li class="mb-2">
+      <i class="bi bi-check-circle-fill text-warning me-2"></i>
+      <strong>Cam kết SLA:</strong> Hỗ trợ 24/7, bảo trì định kỳ
+    </li>
+  </ul>
+
+  <!-- Nút CTA -->
+  <div class="hero-actions d-flex flex-column flex-sm-row gap-3 mt-4">
+    <a href="#registration" class="btn btn-cta btn-lg">
+      <i class="bi bi-ticket-perforated me-2"></i>Đăng ký tham dự
+    </a>
+    <a href="#solutions" class="btn btn-outline-light btn-lg">
+      <i class="bi bi-grid-3x3-gap-fill me-2"></i>Khám phá giải pháp
+    </a>
+  </div>
+
+  <!-- Meta info -->
+  <div class="hero-meta mt-4">
+    <span class="meta-pill"><i class="bi bi-calendar-event"></i> 31/07/2026</span>
+    <span class="meta-pill"><i class="bi bi-geo-alt"></i> Lâm Đồng</span>
+    <span class="meta-pill"><i class="bi bi-camera-video"></i> Hội Thảo An Toàn Thông Tin 2026</span>
+  </div>
+</div>
+
+      <!-- Cột phải: SOC Dashboard -->
+      <div class="col-lg-5 mt-4 mt-lg-0" data-aos="fade-left">
+        <div class="soc-dashboard" id="socDashboard">
+          <!-- Loading skeleton (hiển thị khi chưa có dữ liệu) -->
+          <div class="soc-loading" id="socLoading">
+            <div class="spinner-border text-warning" role="status">
+              <span class="visually-hidden">Đang tải dữ liệu...</span>
+            </div>
+            <p class="mt-2 small text-white-50">Đồng bộ dữ liệu SOC...</p>
+          </div>
+
+          <!-- Nội dung chính (ẩn khi loading) -->
+          <div class="soc-content" id="socContent" style="display: none;">
+            <!-- Header -->
+            <div class="soc-header">
+              <div class="soc-title">
+                <i class="bi bi-shield-lock-fill"></i> SOC GIẢ LẬP
+                <span class="badge bg-warning text-dark ms-2" id="liveBadge">LIVE</span>
+              </div>
+              <div class="soc-subtitle">MỐI ĐE DỌA ĐÃ CHẶN</div>
+            </div>
+
+            <!-- KPI lớn -->
+            <div class="soc-kpi">
+              <span class="kpi-number" id="totalBlocked">0</span>
+              <span class="kpi-unit">triệu</span>
+              <span class="kpi-change" id="kpiChange">▲ 0%</span>
+            </div>
+            <div class="soc-kpi-label">6 tháng gần nhất – toàn hệ thống</div>
+
+            <!-- Biểu đồ cột mini -->
+            <div class="soc-chart" id="chartBars">
+              <div class="bar" style="height: 20px;" data-value="0"></div>
+              <div class="bar" style="height: 20px;" data-value="0"></div>
+              <div class="bar" style="height: 20px;" data-value="0"></div>
+              <div class="bar" style="height: 20px;" data-value="0"></div>
+              <div class="bar" style="height: 20px;" data-value="0"></div>
+              <div class="bar" style="height: 20px;" data-value="0"></div>
+            </div>
+            <div class="soc-chart-labels">
+              <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span>
+            </div>
+
+            <!-- Chỉ số NGFW / WAF -->
+            <div class="soc-indicators row g-2 mt-2">
+              <div class="col-6">
+                <div class="indicator-box">
+                  <span class="indicator-label">NGFW</span>
+                  <span class="indicator-value" id="ngfwValue">0%</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="indicator-box">
+                  <span class="indicator-label">WAF</span>
+                  <span class="indicator-value" id="wafValue">0%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Threat breakdown -->
+            <div class="soc-threats mt-2">
+              <div class="threat-item">
+                <span>Mã độc & email giả mạo</span>
+                <span class="threat-percent" id="threatMalware">0%</span>
+              </div>
+              <div class="threat-item">
+                <span>Sự cố lọt qua hệ thống</span>
+                <span class="threat-percent" id="threatBypass">0%</span>
+              </div>
+            </div>
+
+            <!-- Live Security Feed -->
+            <div class="soc-feed mt-2">
+              <div class="feed-header">
+                <i class="bi bi-rss-fill text-warning"></i> LIVE SECURITY FEED
+                <span class="feed-status online" id="feedStatus">● ONLINE</span>
+              </div>
+              <div class="feed-messages" id="feedMessages">
+                <div class="feed-message">Đang kết nối đến máy chủ giám sát...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
