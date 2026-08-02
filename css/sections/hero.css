@@ -1,5 +1,5 @@
 .hero-section {
-    padding: 116px 0 92px;
+    min-height: 100vh;
     color: #fff;
     background:
         radial-gradient(circle at top right, rgba(139, 220, 255, 0.16), transparent 22%),
@@ -284,6 +284,7 @@
     font-size: 0.65rem;
     color: #8a9aa8;
     letter-spacing: 1.5px;
+    line-height: 1.2;
     opacity: 0.7;
 }
 

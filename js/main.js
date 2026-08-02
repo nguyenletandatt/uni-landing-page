@@ -119,9 +119,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // =========================================================
-    // 5. VIRTUAL MENU (LƯỚI 3x3, VÒNG CUNG)
+    // 5. VIRTUAL MENU (LƯỚI 3x3 + NÚT TRÌNH CHIẾU)
     // =========================================================
     function initVirtualMenu() {
+        // Danh sách các mục: 9 section + 1 hành động (trình chiếu)
         const menuSections = [
             { id: "hero", label: "Trang chủ", icon: "bi-house-fill" },
             { id: "overview", label: "Tổng quan", icon: "bi-info-circle-fill" },
@@ -130,11 +131,14 @@ document.addEventListener("DOMContentLoaded", function () {
             { id: "models", label: "Mô hình", icon: "bi-diagram-3-fill" },
             { id: "deployment", label: "Triển khai", icon: "bi-cloud-upload-fill" },
             { id: "speakers", label: "Đối tác", icon: "bi-people-fill" },
-            { id: "stats", label: "Số liệu", icon: "bi-bar-chart-fill" },
             { id: "registration", label: "Đăng ký", icon: "bi-ticket-perforated-fill" },
+            // Mục đặc biệt – không phải section
+            { id: "autoscroll", label: "Trình chiếu", icon: "bi-play-circle-fill", isAction: true },
         ];
 
+        // Lọc ra các section thật (có element)
         const targets = menuSections
+            .filter(item => !item.isAction) // bỏ qua action
             .map((item) => ({
                 ...item,
                 element: document.getElementById(item.id),
@@ -143,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!targets.length) return;
 
+        // Tạo virtual menu (nếu chưa có)
         let menu = document.querySelector(".virtual-menu");
         if (!menu) {
             menu = document.createElement("div");
@@ -170,23 +175,40 @@ document.addEventListener("DOMContentLoaded", function () {
         const grid = menu.querySelector(".virtual-menu-grid");
         const closeBtn = menu.querySelector(".virtual-menu-close");
 
-        grid.innerHTML = targets
+        // Xây dựng grid gồm các item (section + nút trình chiếu)
+        grid.innerHTML = menuSections
             .map((item, index) => {
-                const number = String(index + 1).padStart(2, "0");
-                return `
-                    <a href="#${item.id}" class="virtual-menu-item" data-target="${item.id}" style="--i: ${index};">
-                        <span class="virtual-menu-icon">
-                            <i class="${item.icon}"></i>
-                        </span>
-                        <span class="virtual-menu-label">${item.label}</span>
-                        <span class="virtual-menu-number">${number}</span>
-                    </a>
-                `;
+                if (item.isAction) {
+                    // Nút hành động – không phải link
+                    return `
+                        <button class="virtual-menu-item" data-action="toggle-autoscroll" style="--i: ${index};">
+                            <span class="virtual-menu-icon">
+                                <i class="${item.icon}"></i>
+                            </span>
+                            <span class="virtual-menu-label">${item.label}</span>
+                        </button>
+                    `;
+                } else {
+                    // Các section thông thường
+                    const number = String(index + 1).padStart(2, "0");
+                    return `
+                        <a href="#${item.id}" class="virtual-menu-item" data-target="${item.id}" style="--i: ${index};">
+                            <span class="virtual-menu-icon">
+                                <i class="${item.icon}"></i>
+                            </span>
+                            <span class="virtual-menu-label">${item.label}</span>
+                            <span class="virtual-menu-number">${number}</span>
+                        </a>
+                    `;
+                }
             })
             .join("");
 
+        // Lấy tất cả các item (cả link và button)
         const items = grid.querySelectorAll(".virtual-menu-item");
+        const autoScrollBtn = grid.querySelector('[data-action="toggle-autoscroll"]');
 
+        // --- Quản lý mở/đóng menu ---
         const setOpen = (isOpen) => {
             menu.classList.toggle("is-open", isOpen);
             panel.hidden = !isOpen;
@@ -209,26 +231,60 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleBtn.addEventListener("click", () => setOpen(panel.hidden));
         closeBtn.addEventListener("click", () => setOpen(false));
 
-        items.forEach((link) => {
-            link.addEventListener("click", (e) => {
-                e.preventDefault();
-                const targetId = link.dataset.target;
-                const targetEl = document.getElementById(targetId);
-                if (targetEl) {
-                    targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        // --- Sự kiện click cho từng item ---
+        items.forEach((item) => {
+            item.addEventListener("click", (e) => {
+                const action = item.dataset.action;
+                if (action === "toggle-autoscroll") {
+                    // Gọi toggle auto-scroll
+                    if (window.autoScroll) {
+                        window.autoScroll.toggle();
+                        // Cập nhật icon và label của nút này
+                        updateAutoScrollButton();
+                    }
+                    // Không đóng menu (giữ mở để thấy trạng thái)
+                    return;
                 }
-                setOpen(false);
+
+                // Các item thông thường: cuộn đến section
+                const targetId = item.dataset.target;
+                if (targetId) {
+                    e.preventDefault();
+                    const targetEl = document.getElementById(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+                        // Nếu auto scroll đang bật, reset timer để chuyển sang section tiếp theo sau delay
+                        if (window.autoScroll && window.autoScroll.isEnabled()) {
+                            window.autoScroll.resetTimer();
+                        }
+                    }
+                    setOpen(false);
+                }
             });
         });
 
+        // Đóng menu khi click ra ngoài
         document.addEventListener("click", (e) => {
             if (!menu.contains(e.target) && !panel.hidden) {
                 setOpen(false);
             }
         });
 
-        menu.classList.add("is-visible");
+        // --- Hàm cập nhật trạng thái của nút trình chiếu ---
+        function updateAutoScrollButton() {
+            if (!autoScrollBtn) return;
+            const isEnabled = window.autoScroll && window.autoScroll.isEnabled();
+            const icon = isEnabled ? "bi-pause-circle-fill" : "bi-play-circle-fill";
+            const label = isEnabled ? "Dừng" : "Trình chiếu";
+            autoScrollBtn.querySelector(".virtual-menu-icon i").className = `bi ${icon}`;
+            autoScrollBtn.querySelector(".virtual-menu-label").textContent = label;
+            autoScrollBtn.classList.toggle("active", isEnabled);
+        }
 
+        // Cập nhật trạng thái ban đầu (mặc định tắt)
+        updateAutoScrollButton();
+
+        // --- Cập nhật active section trong grid khi cuộn ---
         const updateActiveItem = () => {
             const scrollPos = window.scrollY + 180;
             let activeIndex = 0;
@@ -237,13 +293,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     activeIndex = idx;
                 }
             });
+            // Bỏ qua item action (index cuối)
             items.forEach((el, idx) => {
-                el.classList.toggle("active", idx === activeIndex);
+                if (!el.dataset.action) {
+                    el.classList.toggle("active", idx === activeIndex);
+                }
             });
         };
 
         updateActiveItem();
         window.addEventListener("scroll", updateActiveItem, { passive: true });
+
+        // Lưu autoScrollBtn để dùng khi toggle từ bên ngoài
+        window.__autoScrollBtn = autoScrollBtn;
+        window.__updateAutoScrollBtn = updateAutoScrollButton;
     }
 
     // =========================================================
@@ -397,10 +460,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // =========================================================
-    // 10. AUTO SCROLL MƯỢT MÀ THEO SECTION (TRÌNH CHIẾU TV)
+    // 10. AUTO SCROLL – ĐIỀU KHIỂN TỪ MENU ẢO
     // =========================================================
     function initAutoScroll() {
-        // Lấy tất cả các section ID (có thể mở rộng)
+        // Danh sách các section thực tế (theo thứ tự hiển thị)
         const sectionIds = [
             "hero",
             "overview",
@@ -415,7 +478,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "footer",
         ];
 
-        // Lọc ra các section thực sự tồn tại trên trang
         const sections = sectionIds
             .map((id) => document.getElementById(id))
             .filter(Boolean);
@@ -424,67 +486,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Cấu hình
         const config = {
-            delay: 10000, // Thời gian dừng giữa các section (ms)
-            scrollDuration: 1200, // Thời gian cuộn mượt (ms)
-            enabled: true, // Bật/tắt auto scroll
+            delay: 3000,       // 10 giây giữa các section
+            scrollDuration: 1200,
             currentIndex: 0,
             timerId: null,
-            isPaused: false,
+            enabled: false,     // Mặc định tắt
         };
-
-        // Tạo UI điều khiển (thanh tiến trình, nút play/pause, indicator)
-        const controls = document.createElement("div");
-        controls.className = "auto-scroll-controls";
-        controls.innerHTML = `
-            <div class="auto-scroll-progress">
-                <div class="auto-scroll-progress-bar" style="width: 0%;"></div>
-            </div>
-            <div class="auto-scroll-indicators">
-                ${sections.map((_, i) => `
-                    <button class="auto-scroll-dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Chuyển đến section ${i+1}"></button>
-                `).join('')}
-            </div>
-            <div class="auto-scroll-actions">
-                <button class="auto-scroll-toggle" aria-label="Tạm dừng / Tiếp tục trình chiếu">
-                    <i class="bi bi-pause-fill"></i>
-                </button>
-            </div>
-        `;
-        document.body.appendChild(controls);
-
-        // Các elements
-        const progressBar = controls.querySelector(".auto-scroll-progress-bar");
-        const dots = controls.querySelectorAll(".auto-scroll-dot");
-        const toggleBtn = controls.querySelector(".auto-scroll-toggle");
-        const toggleIcon = toggleBtn.querySelector("i");
 
         // Hàm cuộn đến section
         function scrollToSection(index, smooth = true) {
             if (index < 0 || index >= sections.length) return;
             const target = sections[index];
             if (!target) return;
-
-            // Cập nhật active dot
-            dots.forEach((dot, i) => {
-                dot.classList.toggle("active", i === index);
-            });
-
-            // Cập nhật progress
-            const progress = ((index + 1) / sections.length) * 100;
-            progressBar.style.width = progress + "%";
-
-            // Cuộn mượt hoặc nhảy thẳng
             target.scrollIntoView({
                 behavior: smooth ? "smooth" : "instant",
                 block: "start",
             });
-
             config.currentIndex = index;
         }
 
-        // Hàm chuyển đến section tiếp theo
+        // Hàm chuyển sang section tiếp theo
         function goToNextSection() {
-            if (config.isPaused) return;
+            if (!config.enabled) return;
             const nextIndex = (config.currentIndex + 1) % sections.length;
             scrollToSection(nextIndex, true);
         }
@@ -492,11 +515,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Bắt đầu timer
         function startTimer() {
             if (config.timerId) clearInterval(config.timerId);
-            if (!config.enabled || config.isPaused) return;
-
-            config.timerId = setInterval(() => {
-                goToNextSection();
-            }, config.delay);
+            if (!config.enabled) return;
+            config.timerId = setInterval(goToNextSection, config.delay);
         }
 
         // Dừng timer
@@ -507,225 +527,82 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Bật/tắt auto scroll (pause/resume)
-        function toggleAutoScroll() {
-            config.isPaused = !config.isPaused;
-            if (config.isPaused) {
+        // Reset timer (dùng khi người dùng tương tác thủ công)
+        function resetTimer() {
+            if (config.enabled) {
                 stopTimer();
-                toggleIcon.className = "bi bi-play-fill";
-                toggleBtn.setAttribute("aria-label", "Tiếp tục trình chiếu");
-                controls.classList.add("paused");
-            } else {
                 startTimer();
-                toggleIcon.className = "bi bi-pause-fill";
-                toggleBtn.setAttribute("aria-label", "Tạm dừng trình chiếu");
-                controls.classList.remove("paused");
             }
         }
 
-        // Sự kiện click vào dot để chuyển section
-        dots.forEach((dot) => {
-            dot.addEventListener("click", function () {
-                const index = parseInt(this.dataset.index, 10);
-                if (!isNaN(index) && index !== config.currentIndex) {
-                    // Nếu đang ở chế độ pause, vẫn cho phép chuyển
-                    scrollToSection(index, true);
-                    // Reset timer để tránh nhảy ngay sau khi click
-                    if (!config.isPaused) {
-                        stopTimer();
-                        startTimer();
-                    }
-                }
-            });
-        });
-
-        // Sự kiện toggle
-        toggleBtn.addEventListener("click", toggleAutoScroll);
-
-        // Phím Space để pause/resume
-        document.addEventListener("keydown", (e) => {
-            if (e.key === " " || e.key === "Spacebar") {
-                e.preventDefault();
-                toggleAutoScroll();
-            }
-        });
-
-        // Nếu người dùng scroll bằng tay, tạm dừng auto scroll (tùy chọn)
-        let userInteracted = false;
-        let interactionTimeout;
-
-        document.addEventListener("wheel", () => {
-            if (!config.isPaused && config.enabled) {
-                userInteracted = true;
-                clearTimeout(interactionTimeout);
-                // Tạm dừng auto scroll 10s sau khi người dùng scroll
-                if (!config.isPaused) {
-                    // Không tự động pause, nhưng reset timer để tránh xung đột
-                    stopTimer();
-                    startTimer();
-                }
-                interactionTimeout = setTimeout(() => {
-                    userInteracted = false;
-                }, 10000);
-            }
-        }, { passive: true });
-
-        // Xử lý resize để cập nhật vị trí section (nếu cần)
-        // Khi resize, nếu section hiện tại bị lệch, ta có thể điều chỉnh
-        // Không cần thiết
-
-        // Khởi tạo: cuộn đến section đầu tiên (nếu chưa ở đó)
-        setTimeout(() => {
-            // Kiểm tra nếu đang ở section nào, nếu không thì về 0
-            const currentScroll = window.scrollY;
-            let foundIndex = 0;
+        // Bật auto scroll
+        function start() {
+            if (config.enabled) return;
+            config.enabled = true;
+            // Xác định section hiện tại để bắt đầu từ đó
+            const scrollPos = window.scrollY;
+            let currentIdx = 0;
             sections.forEach((sec, idx) => {
-                if (sec.offsetTop <= currentScroll + 100) {
-                    foundIndex = idx;
+                if (sec.offsetTop <= scrollPos + 100) {
+                    currentIdx = idx;
                 }
             });
-            if (foundIndex > 0) {
-                config.currentIndex = foundIndex;
-                // Cập nhật dot và progress
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle("active", i === foundIndex);
-                });
-                const progress = ((foundIndex + 1) / sections.length) * 100;
-                progressBar.style.width = progress + "%";
-            } else {
-                scrollToSection(0, false); // nhảy thẳng về đầu
-            }
-            // Bắt đầu timer
-            if (config.enabled && !config.isPaused) {
-                startTimer();
-            }
-        }, 500); // đợi layout ổn định
+            config.currentIndex = currentIdx;
+            startTimer();
+            // Cập nhật giao diện nút
+            if (window.__updateAutoScrollBtn) window.__updateAutoScrollBtn();
+        }
 
-        // Lưu config để có thể điều chỉnh từ ngoài (nếu cần)
-        window.__autoScroll = {
-            config,
-            scrollToSection,
-            toggleAutoScroll,
-            goToNextSection,
+        // Tắt auto scroll
+        function stop() {
+            if (!config.enabled) return;
+            config.enabled = false;
+            stopTimer();
+            if (window.__updateAutoScrollBtn) window.__updateAutoScrollBtn();
+        }
+
+        // Đảo trạng thái
+        function toggle() {
+            if (config.enabled) {
+                stop();
+            } else {
+                start();
+            }
+        }
+
+        // Kiểm tra trạng thái
+        function isEnabled() {
+            return config.enabled;
+        }
+
+        // Gắn sự kiện scroll để reset timer khi người dùng cuộn thủ công
+        let scrollTimeout;
+        window.addEventListener(
+            "scroll",
+            () => {
+                if (config.enabled) {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        resetTimer();
+                    }, 1000);
+                }
+            },
+            { passive: true }
+        );
+
+        // Xuất các hàm ra window để virtual menu gọi
+        window.autoScroll = {
+            start,
+            stop,
+            toggle,
+            isEnabled,
+            resetTimer,
+            // Hàm để cập nhật chỉ số hiện tại (nếu cần)
+            setCurrentIndex: (idx) => { if (idx >= 0 && idx < sections.length) config.currentIndex = idx; },
         };
 
-        // Thêm style cho controls (có thể đưa vào CSS riêng, nhưng tạm thời inject)
-        const style = document.createElement("style");
-        style.textContent = `
-            .auto-scroll-controls {
-                position: fixed;
-                bottom: 30px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(10, 18, 32, 0.8);
-                backdrop-filter: blur(12px);
-                border: 1px solid rgba(255,255,255,0.08);
-                border-radius: 40px;
-                padding: 10px 24px;
-                display: flex;
-                align-items: center;
-                gap: 18px;
-                z-index: 10000;
-                box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-                transition: opacity 0.3s ease, transform 0.3s ease;
-                opacity: 0.7;
-            }
-            .auto-scroll-controls:hover {
-                opacity: 1;
-            }
-            .auto-scroll-progress {
-                width: 160px;
-                height: 4px;
-                background: rgba(255,255,255,0.12);
-                border-radius: 4px;
-                overflow: hidden;
-                cursor: pointer;
-            }
-            .auto-scroll-progress-bar {
-                height: 100%;
-                width: 0%;
-                background: linear-gradient(90deg, #f9b83a, #ffd36e);
-                border-radius: 4px;
-                transition: width 0.5s ease;
-            }
-            .auto-scroll-indicators {
-                display: flex;
-                gap: 8px;
-                align-items: center;
-            }
-            .auto-scroll-dot {
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                border: none;
-                background: rgba(255,255,255,0.2);
-                padding: 0;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            .auto-scroll-dot.active {
-                background: #f9b83a;
-                transform: scale(1.3);
-                box-shadow: 0 0 12px rgba(249, 184, 58, 0.4);
-            }
-            .auto-scroll-dot:hover {
-                background: rgba(255,255,255,0.5);
-            }
-            .auto-scroll-actions {
-                display: flex;
-                align-items: center;
-            }
-            .auto-scroll-toggle {
-                background: none;
-                border: none;
-                color: #fff;
-                font-size: 1.4rem;
-                padding: 0 4px;
-                cursor: pointer;
-                transition: color 0.2s ease;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .auto-scroll-toggle:hover {
-                color: #f9b83a;
-            }
-            .auto-scroll-controls.paused .auto-scroll-progress-bar {
-                background: #94a3b8;
-            }
-            @media (max-width: 768px) {
-                .auto-scroll-controls {
-                    bottom: 16px;
-                    padding: 8px 16px;
-                    gap: 12px;
-                    border-radius: 30px;
-                }
-                .auto-scroll-progress {
-                    width: 80px;
-                }
-                .auto-scroll-indicators {
-                    gap: 6px;
-                }
-                .auto-scroll-dot {
-                    width: 6px;
-                    height: 6px;
-                }
-                .auto-scroll-toggle {
-                    font-size: 1.2rem;
-                }
-            }
-            @media (max-width: 480px) {
-                .auto-scroll-controls {
-                    bottom: 12px;
-                    padding: 6px 12px;
-                    gap: 8px;
-                }
-                .auto-scroll-progress {
-                    width: 50px;
-                }
-            }
-        `;
-        document.head.appendChild(style);
+        // Khởi tạo: không tự động chạy
+        console.log("🔄 Auto-scroll sẵn sàng (tắt mặc định)");
     }
 
     // =========================================================
@@ -736,11 +613,12 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(() => {
             initAos();
             initNavState();
-            initVirtualMenu();
+            initVirtualMenu();      // Tạo menu ảo (bao gồm nút trình chiếu)
             initForm();
             initSectionSizing();
-            initSocDashboard(); // Khởi tạo dashboard nếu có
-            initAutoScroll(); // Khởi tạo auto scroll
+            initSocDashboard();
+            initAutoScroll();       // Khởi tạo auto-scroll (mặc định tắt)
+
             if (typeof AOS !== "undefined" && typeof AOS.refresh === "function") {
                 AOS.refresh();
             }

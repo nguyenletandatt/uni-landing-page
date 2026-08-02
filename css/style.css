@@ -656,3 +656,124 @@ body.is-loading {
     display: none;
   }
 }
+
+/* ===== INTRO – FULL MÀN HÌNH ===== */
+.page-intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0f1f;
+    border-radius: 0;          /* Không bo tròn */
+    box-shadow: none;          /* Bỏ đổ bóng */
+    z-index: 9999;
+    overflow: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.page-intro.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Container Three.js – vẫn full */
+#three-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* ===== NỘI DUNG – PHÓNG TO ===== */
+.page-intro__shell {
+    position: relative;
+    z-index: 2;
+    max-width: 950px;          /* Tăng từ 720px */
+    width: 85%;
+    padding: 3rem 4rem;        /* Tăng padding */
+    text-align: center;
+    color: #fff;
+    background: rgba(10, 15, 31, 0.25);
+    backdrop-filter: blur(10px);
+    border-radius: 48px;       /* Bo góc lớn hơn */
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+    animation: contentFade 1.8s 0.6s both;
+}
+
+@keyframes contentFade {
+    0% { opacity: 0; transform: scale(0.9) translateY(30px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Logo – to hơn */
+.page-intro__logo-frame {
+    display: inline-block;
+    padding: 1rem;              /* Tăng padding */
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 50%;
+    border: 1px solid rgba(100, 200, 255, 0.25);
+}
+.page-intro__logo {
+    width: 130px;               /* Từ 80px lên 130px */
+    height: auto;
+    filter: drop-shadow(0 0 40px rgba(100, 200, 255, 0.4));
+}
+
+/* Văn bản – to hơn */
+.page-intro__brand-copy {
+    margin-top: 1.8rem;
+}
+.page-intro__eyebrow {
+    font-size: 1rem;            /* Từ 0.75rem */
+    letter-spacing: 4px;
+    padding: 0.5rem 1.8rem;
+}
+.page-intro__brand-copy h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);   /* Tăng cỡ chữ */
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    background: linear-gradient(135deg, #ffffff 30%, #64c8ff 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+}
+.page-intro__brand-copy p {
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem); /* Tăng cỡ chữ */
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* Responsive – vẫn giữ tỉ lệ to */
+@media (max-width: 768px) {
+    .page-intro__shell {
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+        border-radius: 28px;
+    }
+    .page-intro__logo {
+        width: 90px;
+    }
+    .page-intro__brand-copy h1 {
+        font-size: 2rem;
+    }
+    .page-intro__brand-copy p {
+        font-size: 1rem;
+    }
+    .page-intro__eyebrow {
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+    }
+}
+

@@ -327,7 +327,7 @@
         padding: 1.5rem 0;
     }
     .solutions-shield {
-        max-width: 120px;
+        max-width: 200px;
     }
 
     /* Các thẻ tự động trôi theo thứ tự DOM, nhưng ta vẫn giữ vị trí grid cho 8 thẻ còn lại */
@@ -533,4 +533,62 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(249, 184, 58, 0.25);
     color: #0b1a2e;
+}
+
+/* Nâng cấp Khiên trung tâm với hiệu ứng Pulse (nhịp đập năng lượng) */
+.solutions-shield {
+    /* (Giữ nguyên các thuộc tính cũ của bạn...) */
+    position: relative;
+    animation: shieldPulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes shieldPulse {
+    0% { box-shadow: 0 0 20px rgba(139, 220, 255, 0.1), inset 0 0 40px rgba(139, 220, 255, 0.05); }
+    100% { box-shadow: 0 0 50px rgba(139, 220, 255, 0.3), inset 0 0 80px rgba(139, 220, 255, 0.15); }
+}
+
+/* Tinh chỉnh thẻ Callout để mang hơi hướng HUD (Heads-up Display) */
+.solution-callout {
+    /* Giữ nguyên các thuộc tính cũ, thêm/sửa các dòng sau */
+    background: linear-gradient(145deg, rgba(16, 28, 48, 0.6), rgba(8, 16, 28, 0.8));
+    backdrop-filter: blur(12px); /* Tăng độ blur cho đẹp */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 2px solid var(--accent); /* Nhấn mạnh viền trên theo màu của thẻ */
+}
+
+/* Thêm điểm sáng mờ ở góc thẻ để tạo độ sâu */
+.solution-callout::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-soft), transparent);
+}
+
+/* Style cho các SVG Lines */
+.callout-line-group {
+    transition: opacity 0.3s ease;
+}
+.callout-line {
+    transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+.callout-dot {
+    transition: fill 0.3s ease, r 0.3s ease, filter 0.3s ease;
+}
+
+/* Trạng thái đường line khi bị mờ (khi hover vào thẻ khác) */
+.connections-svg.has-hover .callout-line-group:not(.active) {
+    opacity: 0.2;
+}
+
+/* Trạng thái đường line được active (khi hover đúng thẻ của nó) */
+.callout-line-group.active .callout-line {
+    stroke: #fff !important;
+    stroke-width: 2.5 !important;
+    stroke-dasharray: none !important; /* Biến thành nét liền khi hover */
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+.callout-line-group.active .callout-dot {
+    fill: #fff !important;
+    r: 4 !important;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
 }
